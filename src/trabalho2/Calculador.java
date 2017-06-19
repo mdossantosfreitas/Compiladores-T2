@@ -10,6 +10,32 @@ package trabalho2;
  */
 public class Calculador extends LuazinhaBaseVisitor<String> {
     PilhaDeTabelas escopos = new PilhaDeTabelas();
+
+    @Override
+    public String visitCorpodafuncao(LuazinhaParser.CorpodafuncaoContext ctx) {
+        if(ctx.listapar1!=null)
+        {
+          visitListapar(ctx.listapar1);   
+        }
+        if(ctx.bloco()!=null)
+        {
+            visitBloco(ctx.bloco());
+        }
+        return null;
+    }
+
+    @Override
+    public String visitListapar(LuazinhaParser.ListaparContext ctx) {
+         if(ctx.listadenomes_f!=null)
+         {
+           TabelaDeSimbolos escopoAtual;                 
+           escopoAtual = escopos.topo();
+           escopoAtual.adicionarSimbolos(ctx.listadenomes_f.nomes, "parametro"); 
+         }
+         return null;
+    }
+
+   
             
     @Override
     public String visitPrograma(LuazinhaParser.ProgramaContext ctx) {        
@@ -42,7 +68,12 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
        {
            TabelaDeSimbolos escopoAtual;                 
            escopoAtual = escopos.topo();
-           escopoAtual.adicionarSimbolos(ctx.listavar1.nomes, "variavel");
+           for(String nome : ctx.listavar1.nomes)
+           {
+               if(escopoAtual.existeSimbolo(nome) == false)
+                escopoAtual.adicionarSimbolo(nome, "variavel");
+           }
+          
        }
        
       if(ctx.chamadadefuncao()!=null) //chamadadefuncao
@@ -85,8 +116,7 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
       {
           TabelaDeSimbolos t2 = new TabelaDeSimbolos("for");
         
-          escopos.empilhar(t2);
-          escopos.topo().adicionarSimbolo(ctx.NOME().getText(), "variavel");
+          escopos.empilhar(t2);          
           visitExp(ctx.exp_for1);
           visitExp(ctx.exp_for2);
           if(ctx.exp_for3!=null)
@@ -100,30 +130,27 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
           TabelaDeSimbolos t2 = new TabelaDeSimbolos("for");
          
           escopos.empilhar(t2);
-          escopos.topo().adicionarSimbolos(ctx.lista_nomes1.nomes, "variavel");
+    //      escopos.topo().adicionarSimbolos(ctx.lista_nomes1.nomes, "variavel");
           visitListaexp(ctx.listaexp);
           visitBloco(ctx.bloco_for2);          
           escopos.desempilhar();
       }
       if(ctx.cp1 != null) //'function' nomedafuncao corpodafuncao 
       {
-          TabelaDeSimbolos t2 = new TabelaDeSimbolos(visitNomedafuncao(ctx.nomedafuncao()));
-        
+          TabelaDeSimbolos t2 = new TabelaDeSimbolos(visitNomedafuncao(ctx.nomedafuncao()));        
           escopos.empilhar(t2);
           visitCorpodafuncao(ctx.cp1);        
           escopos.desempilhar();
       }
       if(ctx.cp2!=null) //'local' 'function' NOME cp2=corpodafuncao 
       {
-          TabelaDeSimbolos t2 = new TabelaDeSimbolos(ctx.NOME().getText());
-         
+          TabelaDeSimbolos t2 = new TabelaDeSimbolos(ctx.NOME().getText());         
           escopos.empilhar(t2);
           visitCorpodafuncao(ctx.cp2);        
           escopos.desempilhar();
       }
       if(ctx.lista_nomes2!=null) //'local' lista_nomes2=listadenomes ('=' lista_exp3=listaexp)?
       {
-       
           escopos.topo().adicionarSimbolos(ctx.lista_nomes2.nomes, "variavel");
           if(ctx.lista_exp3 != null)
           {
@@ -131,6 +158,31 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
           }
       }      
       return null; 
+    }
+
+    @Override
+    public String visitVar(LuazinhaParser.VarContext ctx) {
+        if(ctx.NOME() != null){
+           TabelaDeSimbolos escopoAtual;                 
+           escopoAtual = escopos.topo();
+           if(escopoAtual.existeSimbolo(ctx.nome) == false)
+              escopoAtual.adicionarSimbolo(ctx.nome, "variavel");
+        }
+        return null;
+    }
+
+    @Override
+    public String visitListavar(LuazinhaParser.ListavarContext ctx) {
+        if(ctx.nomes != null){
+           TabelaDeSimbolos escopoAtual;                 
+           escopoAtual = escopos.topo();
+           for(String nome : ctx.nomes)
+           {
+               if(escopoAtual.existeSimbolo(nome) == false)
+                escopoAtual.adicionarSimbolo(nome, "variavel");
+           }
+        }
+        return null;
     }
 
     @Override

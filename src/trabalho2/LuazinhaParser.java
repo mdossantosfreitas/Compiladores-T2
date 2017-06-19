@@ -1562,6 +1562,7 @@ public class LuazinhaParser extends Parser {
 	}
 
 	public static class CorpodafuncaoContext extends ParserRuleContext {
+		public ListaparContext listapar1;
 		public BlocoContext bloco() {
 			return getRuleContext(BlocoContext.class,0);
 		}
@@ -1602,7 +1603,7 @@ public class LuazinhaParser extends Parser {
 			if (_la==T__25 || _la==NOME) {
 				{
 				setState(278);
-				listapar();
+				((CorpodafuncaoContext)_localctx).listapar1 = listapar();
 				}
 			}
 
@@ -1626,6 +1627,7 @@ public class LuazinhaParser extends Parser {
 	}
 
 	public static class ListaparContext extends ParserRuleContext {
+		public ListadenomesContext listadenomes_f;
 		public ListadenomesContext listadenomes() {
 			return getRuleContext(ListadenomesContext.class,0);
 		}
@@ -1660,7 +1662,7 @@ public class LuazinhaParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(285);
-				listadenomes();
+				((ListaparContext)_localctx).listadenomes_f = listadenomes();
 				setState(288);
 				_errHandler.sync(this);
 				_la = _input.LA(1);

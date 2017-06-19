@@ -84,10 +84,10 @@ args :  '(' (listaexp)? ')' | construtortabela | CADEIA
 funcao : 'function' corpodafuncao
        ;
 
-corpodafuncao : '(' (listapar)? ')' bloco 'end'
+corpodafuncao : '(' (listapar1=listapar)? ')' bloco 'end'
               ;
 
-listapar : listadenomes (',' '...')? 
+listapar : listadenomes_f=listadenomes (',' '...')? 
          | '...'
          ;
 
