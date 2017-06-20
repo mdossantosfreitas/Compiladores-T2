@@ -64,14 +64,14 @@ listaexp : (exp ',')* exp
          ;
 
 exp :  'nil' | 'false' | 'true' | NUMERO | CADEIA | '...' | funcao | 
-       expprefixo2 | construtortabela | exp opbin exp | opunaria exp 
+       exp2=expprefixo2 | construtortabela | exp opbin exp | opunaria exp 
     ;
 
 
 expprefixo : NOME ( '[' exp ']' | '.' NOME )*
            ;
 
-expprefixo2 : var | chamadadefuncao | '(' exp ')'
+expprefixo2 : var1=var | chama_func1=chamadadefuncao | '(' exp ')'
            ;
 
 chamadadefuncao :  expprefixo args |

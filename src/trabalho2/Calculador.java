@@ -64,13 +64,14 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
     
     @Override
     public String visitComando(LuazinhaParser.ComandoContext ctx) {
+       
        if(ctx.listavar1!= null) //listavar '=' listaexp 
        {
            TabelaDeSimbolos escopoAtual;                 
            escopoAtual = escopos.topo();
            for(String nome : ctx.listavar1.nomes)
            {
-               if(escopoAtual.existeSimbolo(nome) == false)
+               if(escopos.existeSimbolo(nome) == false)
                 escopoAtual.adicionarSimbolo(nome, "variavel");
            }
           
@@ -114,9 +115,10 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
       
       if(ctx.exp_for1 != null) //'for' NOME '=' exp_for1=exp ',' exp_for2=exp (',' exp_for3=exp)? 'do' bloco_for=bloco 'end'
       {
+           
           TabelaDeSimbolos t2 = new TabelaDeSimbolos("for");
-        
           escopos.empilhar(t2);          
+          escopos.topo().adicionarSimbolo(ctx.NOME().getText(), "variavel");
           visitExp(ctx.exp_for1);
           visitExp(ctx.exp_for2);
           if(ctx.exp_for3!=null)
@@ -127,10 +129,9 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
       
       if(ctx.lista_nomes1 != null) //'for' lista_nomes1=listadenomes 'in' lista_exp2+=listaexp 'do' bloco_for2=bloco 'end'
       {
-          TabelaDeSimbolos t2 = new TabelaDeSimbolos("for");
-         
-          escopos.empilhar(t2);
-    //      escopos.topo().adicionarSimbolos(ctx.lista_nomes1.nomes, "variavel");
+          TabelaDeSimbolos t2 = new TabelaDeSimbolos("for");         
+          escopos.empilhar(t2);                 
+          escopos.topo().adicionarSimbolos(ctx.lista_nomes1.nomes, "variavel");
           visitListaexp(ctx.listaexp);
           visitBloco(ctx.bloco_for2);          
           escopos.desempilhar();
@@ -161,11 +162,24 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
     }
 
     @Override
+    public String visitExpprefixo2(LuazinhaParser.Expprefixo2Context ctx) {
+        if(ctx.var1 !=null) 
+        {
+            visitVar(ctx.var1);
+        }
+        if(ctx.chama_func1!=null)
+        {
+            visitChamadadefuncao(ctx.chama_func1);
+        }
+        return null;
+    }
+
+    @Override
     public String visitVar(LuazinhaParser.VarContext ctx) {
         if(ctx.NOME() != null){
            TabelaDeSimbolos escopoAtual;                 
            escopoAtual = escopos.topo();
-           if(escopoAtual.existeSimbolo(ctx.nome) == false)
+           if(escopos.existeSimbolo(ctx.nome) == false)
               escopoAtual.adicionarSimbolo(ctx.nome, "variavel");
         }
         return null;
@@ -178,7 +192,7 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
            escopoAtual = escopos.topo();
            for(String nome : ctx.nomes)
            {
-               if(escopoAtual.existeSimbolo(nome) == false)
+               if(escopos.existeSimbolo(nome) == false)
                 escopoAtual.adicionarSimbolo(nome, "variavel");
            }
         }
@@ -218,6 +232,10 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
     
     @Override
     public String visitExp(LuazinhaParser.ExpContext ctx) {
+       if(ctx.exp2 != null)
+       {
+           visitExpprefixo2(ctx.exp2);
+       }
        return null;
     }
 

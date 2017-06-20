@@ -1035,6 +1035,7 @@ public class LuazinhaParser extends Parser {
 	}
 
 	public static class ExpContext extends ParserRuleContext {
+		public Expprefixo2Context exp2;
 		public TerminalNode NUMERO() { return getToken(LuazinhaParser.NUMERO, 0); }
 		public TerminalNode CADEIA() { return getToken(LuazinhaParser.CADEIA, 0); }
 		public FuncaoContext funcao() {
@@ -1141,7 +1142,7 @@ public class LuazinhaParser extends Parser {
 			case NOME:
 				{
 				setState(219);
-				expprefixo2();
+				((ExpContext)_localctx).exp2 = expprefixo2();
 				}
 				break;
 			case T__28:
@@ -1290,6 +1291,8 @@ public class LuazinhaParser extends Parser {
 	}
 
 	public static class Expprefixo2Context extends ParserRuleContext {
+		public VarContext var1;
+		public ChamadadefuncaoContext chama_func1;
 		public VarContext var() {
 			return getRuleContext(VarContext.class,0);
 		}
@@ -1329,14 +1332,14 @@ public class LuazinhaParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(247);
-				var();
+				((Expprefixo2Context)_localctx).var1 = var();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(248);
-				chamadadefuncao();
+				((Expprefixo2Context)_localctx).chama_func1 = chamadadefuncao();
 				}
 				break;
 			case 3:
