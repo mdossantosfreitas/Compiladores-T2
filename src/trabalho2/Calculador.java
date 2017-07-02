@@ -142,6 +142,9 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
       {
           TabelaDeSimbolos t2 = new TabelaDeSimbolos(visitNomedafuncao(ctx.nomedafuncao()));        
           escopos.empilhar(t2);
+          if (ctx.nomedafuncao().metodo) {
+              escopos.topo().adicionarSimbolo("self",  "parametro");
+          }
           visitCorpodafuncao(ctx.cp1);        
           escopos.desempilhar();
       }
