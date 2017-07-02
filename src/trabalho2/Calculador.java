@@ -117,24 +117,24 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
       
       if(ctx.exp_for1 != null) //'for' NOME '=' exp_for1=exp ',' exp_for2=exp (',' exp_for3=exp)? 'do' bloco_for=bloco 'end'
       {
-           
+          visitExp(ctx.exp_for1);
+          visitExp(ctx.exp_for2);
+          if(ctx.exp_for3!=null) {
+              visitExp(ctx.exp_for1);
+          }
           TabelaDeSimbolos t2 = new TabelaDeSimbolos("for");
           escopos.empilhar(t2);          
           escopos.topo().adicionarSimbolo(ctx.NOME().getText(), "variavel");
-          visitExp(ctx.exp_for1);
-          visitExp(ctx.exp_for2);
-          if(ctx.exp_for3!=null)
-            visitExp(ctx.exp_for1);  
           visitBloco(ctx.bloco_for);
           escopos.desempilhar();
       }
       
       if(ctx.lista_nomes1 != null) //'for' lista_nomes1=listadenomes 'in' lista_exp2+=listaexp 'do' bloco_for2=bloco 'end'
       {
+          visitListaexp(ctx.listaexp);
           TabelaDeSimbolos t2 = new TabelaDeSimbolos("for");         
           escopos.empilhar(t2);                 
           escopos.topo().adicionarSimbolos(ctx.lista_nomes1.nomes, "variavel");
-          visitListaexp(ctx.listaexp);
           visitBloco(ctx.bloco_for2);          
           escopos.desempilhar();
       }
@@ -261,14 +261,19 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
     
     @Override
     public String visitExp(LuazinhaParser.ExpContext ctx) {
+        //System.out.println(ctx.getText());
        if(ctx.exp2 != null)
        {
            //System.out.println("entrou na exp2: " + ctx.exp2.getText());
            visitExpprefixo2(ctx.exp2);
        }
-       else if (ctx.expb1 != null) {
+       else if (ctx.expb1 != null && ctx.expb2 != null) {
            visitExp(ctx.expb1);
            visitExp(ctx.expb2);
+       }
+       else if (ctx.var_exp != null) {
+           //System.out.println("eh var: "+ ctx.getText());
+           visitVar(ctx.var_exp);
        }
 //       if (ctx.expb2 != null){
 //           visitExp(ctx.expb2);

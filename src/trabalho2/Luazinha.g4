@@ -63,7 +63,7 @@ listadenomes returns [ List<String> nomes ]
 listaexp : (exp ',')* exp
          ;
 
-exp :  'nil' | 'false' | 'true' | NUMERO | CADEIA | '...' | funcao | 
+exp :  'nil' | 'false' | 'true' | NUMERO | CADEIA | '...' | funcao | var_exp = var[true]|
        exp2=expprefixo2 | construtortabela | expb1=exp opbin expb2=exp | opunaria expu=exp
     ;
 
