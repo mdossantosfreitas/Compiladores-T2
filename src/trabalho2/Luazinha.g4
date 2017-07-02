@@ -43,13 +43,13 @@ nomedafuncao returns [ String nome, boolean metodo ]
 
 listavar returns [ List<String> nomes ]
 @init { $nomes = new ArrayList<String>(); }
-    : v1=var { $nomes.add($v1.nome); }
-      (',' v2=var { $nomes.add($v2.nome); }
+    : v1=var [false] { $nomes.add($v1.nome); }
+      (',' v2=var [false] { $nomes.add($v2.nome); }
       )*
     ;
 
-var returns [ String nome, int linha, int coluna ]
-    :  NOME { $nome = $NOME.getText(); $linha = $NOME.line; $coluna = $NOME.pos; } 
+var [boolean amarrada] returns [ String nome, int linha, int coluna] //boolean amarrada serve para o visitor saber se a variável é amarrada ou não e fazer as ações corretas
+    :  NOME { $nome = $NOME.getText(); $linha = $NOME.line; $coluna = $NOME.pos;}
     |  expprefixo '[' exp ']'
     |  expprefixo '.' NOME
     ;
@@ -71,7 +71,7 @@ exp :  'nil' | 'false' | 'true' | NUMERO | CADEIA | '...' | funcao |
 expprefixo : NOME ( '[' exp ']' | '.' NOME )*
            ;
 
-expprefixo2 : var1=var | chama_func1=chamadadefuncao | '(' exp ')'
+expprefixo2 : var1=var [true] | chama_func1=chamadadefuncao | '(' exp ')'
            ;
 
 chamadadefuncao :  expprefixo args |
