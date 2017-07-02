@@ -194,6 +194,7 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
         {
             visitExpprefixo2(ctx.exp2);
         }
+
         return null;
     }
 
