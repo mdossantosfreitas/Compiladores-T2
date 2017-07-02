@@ -71,7 +71,7 @@ exp :  'nil' | 'false' | 'true' | NUMERO | CADEIA | '...' | funcao |
 expprefixo : NOME ( '[' exp ']' | '.' NOME )*
            ;
 
-expprefixo2 : var1=var [true] | chama_func1=chamadadefuncao | '(' exp ')'
+expprefixo2 : var1=var [true] | chama_func1=chamadadefuncao | '(' expparent = exp ')'
            ;
 
 chamadadefuncao :  expprefixo args |
