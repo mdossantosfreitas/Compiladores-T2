@@ -1,4 +1,4 @@
-// Generated from /home/eduardo/IdeaProjects/Compiladores-T2/src/trabalho2/Luazinha.g4 by ANTLR 4.7
+// Generated from Luazinha.g4 by ANTLR 4.7
 package trabalho2;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -820,7 +820,6 @@ public class LuazinhaParser extends Parser {
 		public String nome;
 		public int linha;
 		public int coluna;
-		public boolean ehAmarrada;
 		public Token NOME;
 		public TerminalNode NOME() { return getToken(LuazinhaParser.NOME, 0); }
 		public ExpprefixoContext expprefixo() {
@@ -862,7 +861,7 @@ public class LuazinhaParser extends Parser {
 				{
 				setState(178);
 				((VarContext)_localctx).NOME = match(NOME);
-				 ((VarContext)_localctx).nome =  ((VarContext)_localctx).NOME.getText(); ((VarContext)_localctx).linha =  (((VarContext)_localctx).NOME!=null?((VarContext)_localctx).NOME.getLine():0); ((VarContext)_localctx).coluna =  (((VarContext)_localctx).NOME!=null?((VarContext)_localctx).NOME.getCharPositionInLine():0); ((VarContext)_localctx).ehAmarrada =  amarrada; 
+				 ((VarContext)_localctx).nome =  ((VarContext)_localctx).NOME.getText(); ((VarContext)_localctx).linha =  (((VarContext)_localctx).NOME!=null?((VarContext)_localctx).NOME.getLine():0); ((VarContext)_localctx).coluna =  (((VarContext)_localctx).NOME!=null?((VarContext)_localctx).NOME.getCharPositionInLine():0);
 				}
 				break;
 			case 2:
@@ -943,7 +942,7 @@ public class LuazinhaParser extends Parser {
 			setState(198);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,15,_ctx);
-			while ( _alt!=2 && _alt!= ATN.INVALID_ALT_NUMBER ) {
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
@@ -1008,7 +1007,7 @@ public class LuazinhaParser extends Parser {
 			setState(206);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,16,_ctx);
-			while ( _alt!=2 && _alt!= ATN.INVALID_ALT_NUMBER ) {
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
@@ -1039,7 +1038,10 @@ public class LuazinhaParser extends Parser {
 	}
 
 	public static class ExpContext extends ParserRuleContext {
+		public ExpContext expb1;
 		public Expprefixo2Context exp2;
+		public ExpContext expu;
+		public ExpContext expb2;
 		public TerminalNode NUMERO() { return getToken(LuazinhaParser.NUMERO, 0); }
 		public TerminalNode CADEIA() { return getToken(LuazinhaParser.CADEIA, 0); }
 		public FuncaoContext funcao() {
@@ -1162,7 +1164,7 @@ public class LuazinhaParser extends Parser {
 				setState(221);
 				opunaria();
 				setState(222);
-				exp(1);
+				((ExpContext)_localctx).expu = exp(1);
 				}
 				break;
 			default:
@@ -1172,20 +1174,22 @@ public class LuazinhaParser extends Parser {
 			setState(232);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,18,_ctx);
-			while ( _alt!=2 && _alt!= ATN.INVALID_ALT_NUMBER ) {
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
 					{
 					_localctx = new ExpContext(_parentctx, _parentState);
+					_localctx.expb1 = _prevctx;
+					_localctx.expb1 = _prevctx;
 					pushNewRecursionContext(_localctx, _startState, RULE_exp);
 					setState(226);
 					if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
 					setState(227);
 					opbin();
 					setState(228);
-					exp(3);
+					((ExpContext)_localctx).expb2 = exp(3);
 					}
 					} 
 				}
@@ -1248,7 +1252,7 @@ public class LuazinhaParser extends Parser {
 			setState(244);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,20,_ctx);
-			while ( _alt!=2 && _alt!= ATN.INVALID_ALT_NUMBER ) {
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					setState(242);
@@ -1808,7 +1812,7 @@ public class LuazinhaParser extends Parser {
 			setState(305);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,29,_ctx);
-			while ( _alt!=2 && _alt!= ATN.INVALID_ALT_NUMBER ) {
+			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{

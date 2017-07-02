@@ -166,7 +166,11 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
     public String visitExpprefixo2(LuazinhaParser.Expprefixo2Context ctx) {
         if(ctx.var1 !=null) 
         {
+
             visitVar(ctx.var1);
+//            if (ctx.var1.amarrada == false) {
+//                Mensagens.erroVariavelNaoExiste(ctx.var1.linha, ctx.var1.coluna, ctx.var1.nome);
+//            }
         }
         if(ctx.chama_func1!=null)
         {
@@ -177,17 +181,23 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
 
     @Override
     public String visitVar(LuazinhaParser.VarContext ctx) {
+        //System.out.println(ctx);
         if(ctx.NOME() != null){
-            System.out.println("Variavel: "+ctx.nome);
+            //System.out.println("Variavel: "+ctx.nome);
            TabelaDeSimbolos escopoAtual;                 
            escopoAtual = escopos.topo();
            if(escopos.existeSimbolo(ctx.nome) == false) {
+               //System.out.println("achou " + ctx.nome);
                if (ctx.amarrada == false) {
                    escopoAtual.adicionarSimbolo(ctx.nome, "variavel");
+                   //System.out.println("nao achou e declarou: " + ctx.nome);
                } else if (ctx.amarrada == true) {
-                   System.out.println("Amarrada: "+ctx.nome);
+                   //System.out.println("Amarrada: "+ctx.nome);
                    Mensagens.erroVariavelNaoExiste(ctx.linha, ctx.coluna, ctx.nome);
                }
+           } else {
+               //System.out.println("nao achou: " + ctx.nome);
+               //Mensagens.erroVariavelNaoExiste(ctx.linha, ctx.coluna, ctx.nome);
            }
         }
         return null;
@@ -198,10 +208,16 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
         if(ctx.nomes != null){
            TabelaDeSimbolos escopoAtual;                 
            escopoAtual = escopos.topo();
+           int cont = 0;
+           //System.out.println(ctx.nomes);
            for(String nome : ctx.nomes)
            {
-               if(escopos.existeSimbolo(nome) == false)
-                visitVar(ctx.v1);
+               if(escopos.existeSimbolo(nome) == false) {
+                   //System.out.println(ctx.v1);
+                   visitVar(ctx.var(cont));
+               }
+                   cont++;
+
            }
         }
         return null;
@@ -244,6 +260,13 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
        {
            visitExpprefixo2(ctx.exp2);
        }
+       else if (ctx.expb1 != null) {
+           visitExp(ctx.expb1);
+           visitExp(ctx.expb2);
+       }
+//       if (ctx.expb2 != null){
+//           visitExp(ctx.expb2);
+//       }
        return null;
     }
 
