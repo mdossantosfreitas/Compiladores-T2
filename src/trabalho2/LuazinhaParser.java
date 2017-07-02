@@ -1035,7 +1035,10 @@ public class LuazinhaParser extends Parser {
 	}
 
 	public static class ExpContext extends ParserRuleContext {
+		public ExpContext expB1;
 		public Expprefixo2Context exp2;
+		public ExpContext expU;
+		public ExpContext expB2;
 		public TerminalNode NUMERO() { return getToken(LuazinhaParser.NUMERO, 0); }
 		public TerminalNode CADEIA() { return getToken(LuazinhaParser.CADEIA, 0); }
 		public FuncaoContext funcao() {
@@ -1158,7 +1161,7 @@ public class LuazinhaParser extends Parser {
 				setState(221);
 				opunaria();
 				setState(222);
-				exp(1);
+				((ExpContext)_localctx).expU = exp(1);
 				}
 				break;
 			default:
@@ -1175,13 +1178,15 @@ public class LuazinhaParser extends Parser {
 					{
 					{
 					_localctx = new ExpContext(_parentctx, _parentState);
+					_localctx.expB1 = _prevctx;
+					_localctx.expB1 = _prevctx;
 					pushNewRecursionContext(_localctx, _startState, RULE_exp);
 					setState(226);
 					if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
 					setState(227);
 					opbin();
 					setState(228);
-					exp(3);
+					((ExpContext)_localctx).expB2 = exp(3);
 					}
 					} 
 				}

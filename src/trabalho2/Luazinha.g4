@@ -64,7 +64,7 @@ listaexp : (exp ',')* exp
          ;
 
 exp :  'nil' | 'false' | 'true' | NUMERO | CADEIA | '...' | funcao | 
-       exp2=expprefixo2 | construtortabela | exp opbin exp | opunaria exp 
+       exp2=expprefixo2 | construtortabela | expB1 = exp opbin expB2 = exp | opunaria expU = exp
     ;
 
 
