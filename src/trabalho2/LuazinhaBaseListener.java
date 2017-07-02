@@ -1,4 +1,4 @@
-// Generated from /home/eduardo/IdeaProjects/Compiladores-T2/src/trabalho2/Luazinha.g4 by ANTLR 4.7
+// Generated from Luazinha.g4 by ANTLR 4.7
 package trabalho2;
 
 import org.antlr.v4.runtime.ParserRuleContext;

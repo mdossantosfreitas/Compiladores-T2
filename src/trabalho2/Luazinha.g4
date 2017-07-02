@@ -44,7 +44,7 @@ nomedafuncao returns [ String nome, boolean metodo ]
 listavar returns [ List<String> nomes ]
 @init { $nomes = new ArrayList<String>(); }
     : v1=var [false] { $nomes.add($v1.nome); }
-      (',' v2=var [false] { $nomes.add($v2.nome); }
+      (',' v2+=var [false] { $nomes.add($var.nome); }
       )*
     ;
 
@@ -64,7 +64,7 @@ listaexp : (exp ',')* exp
          ;
 
 exp :  'nil' | 'false' | 'true' | NUMERO | CADEIA | '...' | funcao | 
-       exp2=expprefixo2 | construtortabela | exp opbin exp | opunaria exp 
+       exp2=expprefixo2 | construtortabela | expb1=exp opbin expb2=exp | opunaria expu=exp
     ;
 
 
@@ -119,4 +119,4 @@ fragment
 EXPOENTE	:	('e' | 'E') ( '+' | '-')? ('0'..'9')+;
 COMENTARIO
 	:	'--' ~('\n' | '\r')* '\r'? '\n' {skip();};
-WS	:	(' ' | '\t' | '\r' | '\n') {skip();};
+WS	:	(' ' | '\t' | '\r' | '\n') -> skip;
