@@ -72,7 +72,8 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
            for(String nome : ctx.listavar1.nomes)
            {
                if(escopos.existeSimbolo(nome) == false)
-                escopoAtual.adicionarSimbolo(nome, "variavel");
+                visitListavar(ctx.listavar1);
+                visitListaexp(ctx.listaexp());
            }
           
        }
@@ -177,10 +178,17 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
     @Override
     public String visitVar(LuazinhaParser.VarContext ctx) {
         if(ctx.NOME() != null){
+            System.out.println("Variavel: "+ctx.nome);
            TabelaDeSimbolos escopoAtual;                 
            escopoAtual = escopos.topo();
-           if(escopos.existeSimbolo(ctx.nome) == false)
-              escopoAtual.adicionarSimbolo(ctx.nome, "variavel");
+           if(escopos.existeSimbolo(ctx.nome) == false) {
+               if (ctx.amarrada == false) {
+                   escopoAtual.adicionarSimbolo(ctx.nome, "variavel");
+               } else if (ctx.amarrada == true) {
+                   System.out.println("Amarrada: "+ctx.nome);
+                   Mensagens.erroVariavelNaoExiste(ctx.linha, ctx.coluna, ctx.nome);
+               }
+           }
         }
         return null;
     }
@@ -193,7 +201,7 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
            for(String nome : ctx.nomes)
            {
                if(escopos.existeSimbolo(nome) == false)
-                escopoAtual.adicionarSimbolo(nome, "variavel");
+                visitVar(ctx.v1);
            }
         }
         return null;

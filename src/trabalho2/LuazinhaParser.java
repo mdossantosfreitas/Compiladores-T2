@@ -1,4 +1,4 @@
-// Generated from Luazinha.g4 by ANTLR 4.7
+// Generated from /home/eduardo/IdeaProjects/Compiladores-T2/src/trabalho2/Luazinha.g4 by ANTLR 4.7
 package trabalho2;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -783,7 +783,7 @@ public class LuazinhaParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(167);
-			((ListavarContext)_localctx).v1 = var();
+			((ListavarContext)_localctx).v1 = var(false);
 			 _localctx.nomes.add(((ListavarContext)_localctx).v1.nome); 
 			setState(175);
 			_errHandler.sync(this);
@@ -794,7 +794,7 @@ public class LuazinhaParser extends Parser {
 				setState(169);
 				match(T__12);
 				setState(170);
-				((ListavarContext)_localctx).v2 = var();
+				((ListavarContext)_localctx).v2 = var(false);
 				 _localctx.nomes.add(((ListavarContext)_localctx).v2.nome); 
 				}
 				}
@@ -816,9 +816,11 @@ public class LuazinhaParser extends Parser {
 	}
 
 	public static class VarContext extends ParserRuleContext {
+		public boolean amarrada;
 		public String nome;
 		public int linha;
 		public int coluna;
+		public boolean ehAmarrada;
 		public Token NOME;
 		public TerminalNode NOME() { return getToken(LuazinhaParser.NOME, 0); }
 		public ExpprefixoContext expprefixo() {
@@ -827,8 +829,10 @@ public class LuazinhaParser extends Parser {
 		public ExpContext exp() {
 			return getRuleContext(ExpContext.class,0);
 		}
-		public VarContext(ParserRuleContext parent, int invokingState) {
+		public VarContext(ParserRuleContext parent, int invokingState) { super(parent, invokingState); }
+		public VarContext(ParserRuleContext parent, int invokingState, boolean amarrada) {
 			super(parent, invokingState);
+			this.amarrada = amarrada;
 		}
 		@Override public int getRuleIndex() { return RULE_var; }
 		@Override
@@ -846,8 +850,8 @@ public class LuazinhaParser extends Parser {
 		}
 	}
 
-	public final VarContext var() throws RecognitionException {
-		VarContext _localctx = new VarContext(_ctx, getState());
+	public final VarContext var(boolean amarrada) throws RecognitionException {
+		VarContext _localctx = new VarContext(_ctx, getState(), amarrada);
 		enterRule(_localctx, 14, RULE_var);
 		try {
 			setState(189);
@@ -858,7 +862,7 @@ public class LuazinhaParser extends Parser {
 				{
 				setState(178);
 				((VarContext)_localctx).NOME = match(NOME);
-				 ((VarContext)_localctx).nome =  ((VarContext)_localctx).NOME.getText(); ((VarContext)_localctx).linha =  (((VarContext)_localctx).NOME!=null?((VarContext)_localctx).NOME.getLine():0); ((VarContext)_localctx).coluna =  (((VarContext)_localctx).NOME!=null?((VarContext)_localctx).NOME.getCharPositionInLine():0); 
+				 ((VarContext)_localctx).nome =  ((VarContext)_localctx).NOME.getText(); ((VarContext)_localctx).linha =  (((VarContext)_localctx).NOME!=null?((VarContext)_localctx).NOME.getLine():0); ((VarContext)_localctx).coluna =  (((VarContext)_localctx).NOME!=null?((VarContext)_localctx).NOME.getCharPositionInLine():0); ((VarContext)_localctx).ehAmarrada =  amarrada; 
 				}
 				break;
 			case 2:
@@ -939,7 +943,7 @@ public class LuazinhaParser extends Parser {
 			setState(198);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,15,_ctx);
-			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+			while ( _alt!=2 && _alt!= ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
@@ -1004,7 +1008,7 @@ public class LuazinhaParser extends Parser {
 			setState(206);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,16,_ctx);
-			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+			while ( _alt!=2 && _alt!= ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
@@ -1168,7 +1172,7 @@ public class LuazinhaParser extends Parser {
 			setState(232);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,18,_ctx);
-			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+			while ( _alt!=2 && _alt!= ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
 					_prevctx = _localctx;
@@ -1244,7 +1248,7 @@ public class LuazinhaParser extends Parser {
 			setState(244);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,20,_ctx);
-			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+			while ( _alt!=2 && _alt!= ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					setState(242);
@@ -1332,7 +1336,7 @@ public class LuazinhaParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(247);
-				((Expprefixo2Context)_localctx).var1 = var();
+				((Expprefixo2Context)_localctx).var1 = var(true);
 				}
 				break;
 			case 2:
@@ -1804,7 +1808,7 @@ public class LuazinhaParser extends Parser {
 			setState(305);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,29,_ctx);
-			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
+			while ( _alt!=2 && _alt!= ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
