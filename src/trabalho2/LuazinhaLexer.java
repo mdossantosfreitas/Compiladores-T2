@@ -91,7 +91,7 @@ public class LuazinhaLexer extends Lexer {
 	}
 
 
-	static String grupo = "<Coloque os RAs do seu grupo aqui>"; 
+	static String grupo = "<619515,619485,551759,619540>";
 	static PilhaDeTabelas pilhaDeTabelas = new PilhaDeTabelas();
 
 

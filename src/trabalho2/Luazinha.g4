@@ -2,7 +2,7 @@ grammar Luazinha;
 
 
 @members{
-static String grupo = "<619515, >";
+static String grupo = "<619515,619485,551759,619540>";
 static PilhaDeTabelas pilhaDeTabelas = new PilhaDeTabelas();
 }
 

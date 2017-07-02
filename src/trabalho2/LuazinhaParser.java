@@ -100,7 +100,7 @@ public class LuazinhaParser extends Parser {
 	public ATN getATN() { return _ATN; }
 
 
-	static String grupo = "<Coloque os RAs do seu grupo aqui>"; 
+	static String grupo = "<619515,619485,551759,619540>";
 	static PilhaDeTabelas pilhaDeTabelas = new PilhaDeTabelas();
 
 	public LuazinhaParser(TokenStream input) {
