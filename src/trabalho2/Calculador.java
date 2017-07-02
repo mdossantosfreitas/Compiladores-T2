@@ -71,9 +71,10 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
            escopoAtual = escopos.topo();
            for(String nome : ctx.listavar1.nomes)
            {
-               if(escopos.existeSimbolo(nome) == false)
-                visitListavar(ctx.listavar1);
-                visitListaexp(ctx.listaexp());
+               visitListaexp(ctx.listaexp());
+               if(escopos.existeSimbolo(nome) == false) {
+                   visitListavar(ctx.listavar1);
+               }
            }
           
        }
