@@ -165,6 +165,7 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
 
     @Override
     public String visitExpprefixo2(LuazinhaParser.Expprefixo2Context ctx) {
+        //System.out.println(ctx.getText());
         if(ctx.var1 !=null) 
         {
 
@@ -172,6 +173,9 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
 //            if (ctx.var1.amarrada == false) {
 //                Mensagens.erroVariavelNaoExiste(ctx.var1.linha, ctx.var1.coluna, ctx.var1.nome);
 //            }
+        }
+        if (ctx.expparent != null) {
+            visitExp(ctx.expparent);
         }
         if(ctx.chama_func1!=null)
         {
@@ -259,6 +263,7 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
     public String visitExp(LuazinhaParser.ExpContext ctx) {
        if(ctx.exp2 != null)
        {
+           //System.out.println("entrou na exp2: " + ctx.exp2.getText());
            visitExpprefixo2(ctx.exp2);
        }
        else if (ctx.expb1 != null) {

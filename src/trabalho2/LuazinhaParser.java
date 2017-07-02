@@ -748,7 +748,8 @@ public class LuazinhaParser extends Parser {
 	public static class ListavarContext extends ParserRuleContext {
 		public List<String> nomes;
 		public VarContext v1;
-		public VarContext v2;
+		public VarContext var;
+		public List<VarContext> v2 = new ArrayList<VarContext>();
 		public List<VarContext> var() {
 			return getRuleContexts(VarContext.class);
 		}
@@ -783,7 +784,7 @@ public class LuazinhaParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(167);
-			((ListavarContext)_localctx).v1 = var(false);
+			((ListavarContext)_localctx).v1 = ((ListavarContext)_localctx).var = var(false);
 			 _localctx.nomes.add(((ListavarContext)_localctx).v1.nome); 
 			setState(175);
 			_errHandler.sync(this);
@@ -794,8 +795,9 @@ public class LuazinhaParser extends Parser {
 				setState(169);
 				match(T__12);
 				setState(170);
-				((ListavarContext)_localctx).v2 = var(false);
-				 _localctx.nomes.add(((ListavarContext)_localctx).v2.nome); 
+				((ListavarContext)_localctx).var = ((ListavarContext)_localctx).var = var(false);
+				((ListavarContext)_localctx).v2.add(((ListavarContext)_localctx).var);
+				 _localctx.nomes.add(((ListavarContext)_localctx).var.nome); 
 				}
 				}
 				setState(177);
@@ -1301,6 +1303,7 @@ public class LuazinhaParser extends Parser {
 	public static class Expprefixo2Context extends ParserRuleContext {
 		public VarContext var1;
 		public ChamadadefuncaoContext chama_func1;
+		public ExpContext expparent;
 		public VarContext var() {
 			return getRuleContext(VarContext.class,0);
 		}
@@ -1356,7 +1359,7 @@ public class LuazinhaParser extends Parser {
 				setState(249);
 				match(T__26);
 				setState(250);
-				exp(0);
+				((Expprefixo2Context)_localctx).expparent = exp(0);
 				setState(251);
 				match(T__27);
 				}
