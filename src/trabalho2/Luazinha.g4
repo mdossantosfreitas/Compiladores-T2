@@ -6,6 +6,11 @@ static String grupo = "<619515,619485,551759,619540>";
 static PilhaDeTabelas pilhaDeTabelas = new PilhaDeTabelas();
 }
 
+/** Observações:
+**      - a gramática foi minimamente modificada, apenas
+**        nomeando algumas regras para facilitar a
+**        implementação utilizando o Visitor
+**/
 
 programa : 
            trecho

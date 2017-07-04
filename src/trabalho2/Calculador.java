@@ -6,11 +6,14 @@
 package trabalho2;
 /**
  *
- * @author Matheus
+ * @author Matheus, felipequecole
  */
+
+// classe responsavel pela analise semântica
 public class Calculador extends LuazinhaBaseVisitor<String> {
     PilhaDeTabelas escopos = new PilhaDeTabelas();
 
+    // "Visita" a regra 'corpodafuncao' chamando os metodos corretos em cada caso
     @Override
     public String visitCorpodafuncao(LuazinhaParser.CorpodafuncaoContext ctx) {
         if(ctx.listapar1!=null)
@@ -24,6 +27,7 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
         return null;
     }
 
+    // Visita a regra listapar, criando um novo escopo, e adicionando os valores na tabela de simbolos
     @Override
     public String visitListapar(LuazinhaParser.ListaparContext ctx) {
          if(ctx.listadenomes_f!=null)
@@ -36,7 +40,7 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
     }
 
    
-            
+   // visita a regra programa, cria um escopo (que é o global), e desempilha o escopo ao fim do programa.
     @Override
     public String visitPrograma(LuazinhaParser.ProgramaContext ctx) {        
        escopos.empilhar(new TabelaDeSimbolos("global"));
@@ -46,7 +50,7 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
         
     }
     
-    
+    // visita regra trecho retornando a string do trecho em questão
     @Override
     public String visitTrecho(LuazinhaParser.TrechoContext ctx) {
         String valor = "";
@@ -61,14 +65,13 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
         
         return valor;
     }
-    
+
+    // criado para a regra 'comando' e cria os escopos para cada regra subsequente, quando necessario.
     @Override
     public String visitComando(LuazinhaParser.ComandoContext ctx) {
        
        if(ctx.listavar1!= null) //listavar '=' listaexp 
        {
-           TabelaDeSimbolos escopoAtual;                 
-           escopoAtual = escopos.topo();
            for(String nome : ctx.listavar1.nomes)
            {
                visitListaexp(ctx.listaexp());
@@ -166,6 +169,7 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
       return null; 
     }
 
+    // criado para a regra 'expprefixo2' chama os metodos adequados para cada regra gerada por esta.
     @Override
     public String visitExpprefixo2(LuazinhaParser.Expprefixo2Context ctx) {
         if(ctx.var1 !=null)
@@ -182,15 +186,18 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
         return null;
     }
 
+    // visita a regra variavel
     @Override
     public String visitVar(LuazinhaParser.VarContext ctx) {
         if(ctx.NOME() != null){
            TabelaDeSimbolos escopoAtual;
            escopoAtual = escopos.topo();
-           if(escopos.existeSimbolo(ctx.nome) == false) {
-               if (ctx.amarrada == false) {
-                   escopoAtual.adicionarSimbolo(ctx.nome, "variavel");
+           if(escopos.existeSimbolo(ctx.nome) == false) { //verifica se a variavel ja foi previamente declarada
+               if (ctx.amarrada == false) { // verifica se ela deveria ter sido declarada
+                   escopoAtual.adicionarSimbolo(ctx.nome, "variavel"); // caso nao, cria entrada na tabela de simbolos
                } else if (ctx.amarrada == true) {
+                   // caso a variavel devesse ter sido declarada previamente, eg: x = y + 1 (e y nao foi declarado),
+                   // retorna mensagem de erro.
                    Mensagens.erroVariavelNaoExiste(ctx.linha, ctx.coluna, ctx.nome);
                }
            }
@@ -198,11 +205,10 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
         return null;
     }
 
+    // percorre uma lista de variaveis, eg: x, y, z = 1, 2, 3
     @Override
     public String visitListavar(LuazinhaParser.ListavarContext ctx) {
         if(ctx.nomes != null){
-           TabelaDeSimbolos escopoAtual;                 
-           escopoAtual = escopos.topo();
            int cont = 0;
            for(String nome : ctx.nomes)
            {
@@ -216,37 +222,7 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
         return null;
     }
 
-    @Override
-    public String visitNomedafuncao(LuazinhaParser.NomedafuncaoContext ctx) {
-        return ctx.nome;
-    }
-    
-     @Override
-    public String visitBloco(LuazinhaParser.BlocoContext ctx) {
-        return visitTrecho(ctx.trecho()); 
-    }
-    
-    
-    @Override
-    public String visitCampo(LuazinhaParser.CampoContext ctx) {  
-        return null;
-    }
-    
-      @Override
-    public String visitSeparadordecampos(LuazinhaParser.SeparadordecamposContext ctx) {
-        return ctx.getText();
-    }
-    
-     @Override
-    public String visitOpbin(LuazinhaParser.OpbinContext ctx) {
-       return ctx.getText();
-    }  
-    
-    @Override
-    public String visitOpunaria(LuazinhaParser.OpunariaContext ctx) {
-       return ctx.getText();    
-    }   
-    
+    // visita regra 'exp' chamando os metodos adequados para cada caso
     @Override
     public String visitExp(LuazinhaParser.ExpContext ctx) {
        if(ctx.exp2 != null)
@@ -263,6 +239,7 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
        return null;
     }
 
+    // visit para 'listaexp', chama o visit da exp em cada elemento da lista de exp
     @Override
     public String visitListaexp(LuazinhaParser.ListaexpContext ctx) {
         for(LuazinhaParser.ExpContext cont : ctx.exp())
@@ -271,8 +248,44 @@ public class Calculador extends LuazinhaBaseVisitor<String> {
         }
         return null;
     }
-    
-    
-    
-    
+
+    /*
+        Inicio dos metodos que apenas retornam seu conteúdo e não precisaram de maiores calculos
+        para realização desse trabalho
+     */
+
+    @Override
+    public String visitNomedafuncao(LuazinhaParser.NomedafuncaoContext ctx) {
+        return ctx.nome;
+    }
+
+    @Override
+    public String visitBloco(LuazinhaParser.BlocoContext ctx) {
+        return visitTrecho(ctx.trecho());
+    }
+
+
+    @Override
+    public String visitCampo(LuazinhaParser.CampoContext ctx) {
+        return null;
+    }
+
+    @Override
+    public String visitSeparadordecampos(LuazinhaParser.SeparadordecamposContext ctx) {
+        return ctx.getText();
+    }
+
+    @Override
+    public String visitOpbin(LuazinhaParser.OpbinContext ctx) {
+        return ctx.getText();
+    }
+
+    @Override
+    public String visitOpunaria(LuazinhaParser.OpunariaContext ctx) {
+        return ctx.getText();
+    }
+
+
+
+
 }
